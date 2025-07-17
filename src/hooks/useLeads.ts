@@ -87,13 +87,18 @@ export const useDashboardStats = () => {
   const fetchStats = async () => {
     try {
       setError(null);
-      const response = await fetch(getApiUrl('/dashboard/stats'));
+      const url = getApiUrl('/dashboard/stats');
+      console.log('🔍 Fetching dashboard stats from:', url);
+      const response = await fetch(url);
+      console.log('📊 Response status:', response.status);
       if (!response.ok) {
-        throw new Error('Failed to fetch dashboard stats');
+        throw new Error(`Failed to fetch dashboard stats: ${response.status} ${response.statusText}`);
       }
       const stats = await response.json();
+      console.log('📈 Dashboard stats:', stats);
       setData(stats);
     } catch (err) {
+      console.error('❌ Dashboard stats error:', err);
       setError(err instanceof Error ? err : new Error('Unknown error'));
     } finally {
       setIsLoading(false);
