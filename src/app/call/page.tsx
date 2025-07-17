@@ -83,7 +83,7 @@ export default function CallInterfacePage() {
         wsRef.current.close();
       }
     };
-  }, []);
+  }, [callSid]);
 
   const initiateCall = async () => {
     if (!phoneNumber) {

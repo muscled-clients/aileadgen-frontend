@@ -23,16 +23,16 @@ interface Campaign {
   completed_at?: string;
 }
 
-interface Lead {
-  id: string;
-  name: string;
-  phone_number: string;
-  email?: string;
-  status: 'new' | 'called' | 'booked' | 'callback' | 'not_answered' | 'failed';
-  niche?: string;
-  qualified?: boolean;
-  created_at: string;
-}
+// interface Lead {
+//   id: string;
+//   name: string;
+//   phone_number: string;
+//   email?: string;
+//   status: 'new' | 'called' | 'booked' | 'callback' | 'not_answered' | 'failed';
+//   niche?: string;
+//   qualified?: boolean;
+//   created_at: string;
+// }
 
 export default function CampaignDetailsPage() {
   const params = useParams();
@@ -40,7 +40,7 @@ export default function CampaignDetailsPage() {
   const campaignId = params.id as string;
   
   const { data: campaign, isLoading: loading, error, refetch: refetchCampaign } = useCampaign(campaignId);
-  const { data: allLeads, refetch: refetchLeads } = useLeads();
+  const { data: allLeads } = useLeads();
   
   // Filter leads for this campaign
   const leads = (allLeads || []).filter(lead => campaign?.lead_ids.includes(lead.id));
@@ -50,7 +50,7 @@ export default function CampaignDetailsPage() {
     try {
       await updateCampaignStatus(campaignId, 'start');
       refetchCampaign();
-    } catch (err) {
+    } catch (_err) {
       alert('Error starting campaign. Please try again.');
     }
   };
@@ -59,7 +59,7 @@ export default function CampaignDetailsPage() {
     try {
       await updateCampaignStatus(campaignId, 'pause');
       refetchCampaign();
-    } catch (err) {
+    } catch (_err) {
       alert('Error pausing campaign. Please try again.');
     }
   };
@@ -68,7 +68,7 @@ export default function CampaignDetailsPage() {
     try {
       await updateCampaignStatus(campaignId, 'resume');
       refetchCampaign();
-    } catch (err) {
+    } catch (_err) {
       alert('Error resuming campaign. Please try again.');
     }
   };
@@ -82,7 +82,7 @@ export default function CampaignDetailsPage() {
       await deleteCampaign(campaignId);
       alert('Campaign deleted successfully');
       router.push('/campaigns');
-    } catch (err) {
+    } catch (_err) {
       alert('Error deleting campaign. Please try again.');
     }
   };

@@ -197,8 +197,8 @@ export default function EmailHistoryPage() {
   const filteredHistory = displayHistory.filter(item => {
     const matchesFilter = filter === 'all' || item.status === filter;
     const matchesSearch = searchTerm === '' || 
-      (item.to_name || item.recipientName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (item.to_email || item.recipientEmail || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (item.recipientName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (item.recipientEmail || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
       (item.subject || '').toLowerCase().includes(searchTerm.toLowerCase());
     return matchesFilter && matchesSearch;
   });
@@ -310,28 +310,28 @@ export default function EmailHistoryPage() {
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
                             <span className="text-sm font-semibold text-white">
-                              {(item.to_name || item.recipientName || 'N/A').split(' ').map(n => n[0]).join('').toUpperCase()}
+                              {(item.recipientName || 'N/A').split(' ').map(n => n[0]).join('').toUpperCase()}
                             </span>
                           </div>
                           <div>
-                            <p className="font-medium text-gray-900">{item.to_name || item.recipientName || 'Unknown'}</p>
-                            <p className="text-sm text-gray-500">{item.to_email || item.recipientEmail || 'No email'}</p>
+                            <p className="font-medium text-gray-900">{item.recipientName || 'Unknown'}</p>
+                            <p className="text-sm text-gray-500">{item.recipientEmail || 'No email'}</p>
                           </div>
                         </div>
                       </td>
                       <td className="py-4 px-6">
                         <div>
-                          <p className="font-medium text-gray-900">{item.template_id || item.emailType || 'Direct Email'}</p>
+                          <p className="font-medium text-gray-900">{item.emailType || 'Direct Email'}</p>
                           <p className="text-sm text-gray-500">{item.subject}</p>
                         </div>
                       </td>
                       <td className="py-4 px-6">
-                        {item.workflow_id ? (
+                        {item.workflowId ? (
                           <Link
-                            href={`/email-automation/workflow/${item.workflow_id}`}
+                            href={`/email-automation/workflow/${item.workflowId}`}
                             className="text-blue-600 hover:text-blue-800 text-sm font-medium"
                           >
-                            {item.workflowName || `Workflow ${item.workflow_id}`}
+                            {item.workflowName || `Workflow ${item.workflowId}`}
                           </Link>
                         ) : (
                           <span className="text-sm text-gray-500">No workflow</span>
@@ -344,13 +344,13 @@ export default function EmailHistoryPage() {
                       </td>
                       <td className="py-4 px-6">
                         <div className="text-sm text-gray-600">
-                          {(item.opened_at || item.openedAt) && (
-                            <div>Opened: {item.openedAt || new Date(item.opened_at).toLocaleDateString()}</div>
+                          {item.openedAt && (
+                            <div>Opened: {item.openedAt}</div>
                           )}
-                          {(item.clicked_at || item.clickedAt) && (
-                            <div>Clicked: {item.clickedAt || new Date(item.clicked_at).toLocaleDateString()}</div>
+                          {item.clickedAt && (
+                            <div>Clicked: {item.clickedAt}</div>
                           )}
-                          {!(item.opened_at || item.openedAt) && !(item.clicked_at || item.clickedAt) && (
+                          {!item.openedAt && !item.clickedAt && (
                             <div>No activity</div>
                           )}
                         </div>

@@ -35,6 +35,31 @@ class ApiClient {
     }
   }
 
+  // Convenience methods
+  async get<T>(endpoint: string, headers?: Record<string, string>): Promise<T> {
+    return this.request<T>(endpoint, { method: 'GET', headers })
+  }
+
+  async post<T>(endpoint: string, data?: any, headers?: Record<string, string>): Promise<T> {
+    return this.request<T>(endpoint, {
+      method: 'POST',
+      body: data ? JSON.stringify(data) : undefined,
+      headers
+    })
+  }
+
+  async put<T>(endpoint: string, data?: any, headers?: Record<string, string>): Promise<T> {
+    return this.request<T>(endpoint, {
+      method: 'PUT',
+      body: data ? JSON.stringify(data) : undefined,
+      headers
+    })
+  }
+
+  async delete<T>(endpoint: string, headers?: Record<string, string>): Promise<T> {
+    return this.request<T>(endpoint, { method: 'DELETE', headers })
+  }
+
   // Health check
   async healthCheck() {
     return this.request<{ status: string; timestamp: string }>('/health')

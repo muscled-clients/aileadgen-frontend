@@ -28,7 +28,7 @@ export default function CampaignsPage() {
     try {
       await updateCampaignStatus(campaignId, 'start');
       refetch(); // Manually refetch to update UI
-    } catch (err) {
+    } catch (_err) {
       alert('Error starting campaign. Please try again.');
     }
   };
@@ -37,7 +37,7 @@ export default function CampaignsPage() {
     try {
       await updateCampaignStatus(campaignId, 'pause');
       refetch(); // Manually refetch to update UI
-    } catch (err) {
+    } catch (_err) {
       alert('Error pausing campaign. Please try again.');
     }
   };
@@ -46,7 +46,7 @@ export default function CampaignsPage() {
     try {
       await updateCampaignStatus(campaignId, 'resume');
       refetch(); // Manually refetch to update UI
-    } catch (err) {
+    } catch (_err) {
       alert('Error resuming campaign. Please try again.');
     }
   };

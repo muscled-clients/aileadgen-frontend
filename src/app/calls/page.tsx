@@ -65,7 +65,7 @@ export default function CallsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   
   // Simple hooks
-  const { data: filteredCallLogs, refetch: refetchCallLogs } = useFilteredCallLogs(searchTerm, campaignFilter, outcomeFilter);
+  const { data: filteredCallLogs } = useFilteredCallLogs(searchTerm, campaignFilter, outcomeFilter);
   const { data: activeCampaigns, refetch: refetchActiveCampaigns } = useActiveCampaigns();
   const { data: leads } = useLeads();
 
@@ -130,7 +130,7 @@ export default function CallsPage() {
         wsRef.current.close();
       }
     };
-  }, []);
+  }, [callSid]);
 
   const initiateLeadCall = async () => {
     if (!selectedLead) {
