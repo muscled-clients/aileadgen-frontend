@@ -39,7 +39,9 @@ function validateNodeEnv(value: string | undefined): 'development' | 'production
 }
 
 export const config: AppConfig = {
-  API_BASE_URL: validateUrl('NEXT_PUBLIC_API_URL', process.env.NEXT_PUBLIC_API_URL, false) || 'http://localhost:8000',
+  API_BASE_URL: process.env.NODE_ENV === 'production' 
+    ? 'https://aileadgen-backend-production.up.railway.app'
+    : 'http://localhost:8000',
   SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || '',
   SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
   RETELL_API_KEY: process.env.RETELL_API_KEY || '',
