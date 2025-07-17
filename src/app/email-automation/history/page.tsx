@@ -21,9 +21,13 @@ interface EmailHistoryItem {
 }
 
 export default function EmailHistoryPage() {
+  // React hooks must be called at the top level
+  const [filter, setFilter] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
+  
   // Temporarily disable API call to prevent 404 error
   // const { history: emailHistory, isLoading, error } = useEmailHistory(100, 0);
-  const emailHistory: any[] = [];
+  const emailHistory: EmailHistoryItem[] = [];
   const isLoading = false;
   const error = null;
   
@@ -166,9 +170,6 @@ export default function EmailHistoryPage() {
       timestamp: '35 minutes ago'
     }
   ];
-
-  const [filter, setFilter] = useState('all');
-  const [searchTerm, setSearchTerm] = useState('');
 
   const getStatusBadge = (status: string) => {
     switch (status) {
