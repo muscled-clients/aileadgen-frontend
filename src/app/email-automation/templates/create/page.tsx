@@ -160,12 +160,14 @@ export default function CreateTemplatePage() {
 
             <div className="flex justify-end space-x-3 pt-6 border-t">
               <Link href="/email-automation/templates">
-                <Button type="button" variant="outline">
+                <Button type="button" variant="outline" size="sm">
                   Cancel
                 </Button>
               </Link>
               <Button 
                 type="submit" 
+                variant="primary"
+                size="sm"
                 className="bg-blue-600 hover:bg-blue-700"
                 disabled={isLoading || creating}
               >

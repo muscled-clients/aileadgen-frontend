@@ -550,6 +550,7 @@ export default function EmailAutomationPage() {
                       target_audience: 'all_leads',
                       steps: [
                         {
+                          id: 'step-1',
                           template_id: 'default_welcome',
                           delay_days: 0,
                           delay_hours: 0,

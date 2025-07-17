@@ -186,7 +186,6 @@ export default function EmailHistoryPage() {
       status: 'bounced',
       sent_at: '2024-01-15T09:15:00Z',
       error_message: 'Email bounced'
-      timestamp: '35 minutes ago'
     }
   ];
 

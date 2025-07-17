@@ -30,17 +30,6 @@ export default function EmailTemplateEditorPage() {
     created_at: '2024-01-15T09:00:00Z',
     updated_at: '2024-01-15T09:00:00Z',
     variables: ['name', 'email', 'niche', 'phone', 'company_name', 'revenue', 'pain_point', 'calendar_link', 'profile_link'],
-    previewData: {
-      name: 'John Smith',
-      email: 'john.smith@company.com',
-      niche: 'real estate',
-      phone: '(555) 123-4567',
-      company_name: 'Smith Realty',
-      revenue: '$40K - $80K',
-      pain_point: 'Not enough qualified leads',
-      calendar_link: 'https://calendly.com/ai-lead-gen/demo',
-      profile_link: 'https://app.aileadgen.com/profile'
-    },
     content: `Hi {{name}},
 
 Welcome to AI Lead Gen! We're thrilled to have you join our community of successful {{niche}} professionals.
@@ -121,13 +110,25 @@ Unsubscribe: [unsubscribe_link]`
     }
   };
 
+  // Preview data for template variables
+  const previewData = {
+    name: 'John Smith',
+    email: 'john.smith@company.com',
+    niche: 'real estate',
+    phone: '(555) 123-4567',
+    company_name: 'Smith Realty',
+    revenue: '$40K - $80K',
+    pain_point: 'Not enough qualified leads',
+    calendar_link: 'https://calendly.com/ai-lead-gen/demo',
+    profile_link: 'https://app.aileadgen.com/profile'
+  };
+
   const renderPreview = () => {
     let previewContent = template.content;
     let previewSubject = template.subject;
-
-    // Replace template variables with preview data
+    
     template.variables.forEach(variable => {
-      const value = template.previewData[variable] || `{{${variable}}}`;
+      const value = previewData[variable as keyof typeof previewData] || `{{${variable}}}`;
       const regex = new RegExp(`{{${variable}}}`, 'g');
       previewContent = previewContent.replace(regex, value);
       previewSubject = previewSubject.replace(regex, value);
@@ -142,7 +143,7 @@ Unsubscribe: [unsubscribe_link]`
           </div>
           <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
             <span>To:</span>
-            <span className="font-medium">{template.previewData.name} &lt;{template.previewData.email}&gt;</span>
+            <span className="font-medium">{previewData.name} &lt;{previewData.email}&gt;</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-gray-600">
             <span>Subject:</span>
@@ -248,7 +249,7 @@ Unsubscribe: [unsubscribe_link]`
               <div className="mt-4 text-sm text-blue-800">
                 <p className="font-medium">Preview Values:</p>
                 <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
-                  {Object.entries(template.previewData).map(([key, value]) => (
+                  {Object.entries(previewData).map(([key, value]) => (
                     <div key={key} className="flex">
                       <span className="font-medium">{key}:</span>
                       <span className="ml-2">{value}</span>
