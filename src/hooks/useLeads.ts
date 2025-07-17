@@ -44,7 +44,7 @@ export const useLeads = () => {
   const fetchLeads = async () => {
     try {
       setError(null);
-      const response = await fetch(getApiUrl('/api/leads'));
+      const response = await fetch('https://aileadgen-backend-production.up.railway.app/api/leads');
       if (!response.ok) {
         throw new Error('Failed to fetch leads');
       }
@@ -89,7 +89,7 @@ export const useDashboardStats = () => {
   const fetchStats = async () => {
     try {
       setError(null);
-      const url = getApiUrl('/dashboard/stats');
+      const url = 'https://aileadgen-backend-production.up.railway.app/dashboard/stats';
       console.log('🔍 Fetching dashboard stats from:', url);
       const response = await fetch(url);
       console.log('📊 Response status:', response.status);
