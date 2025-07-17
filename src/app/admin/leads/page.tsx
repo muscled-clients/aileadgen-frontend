@@ -30,7 +30,7 @@ export default function AdminLeadsPage() {
   const fetchLeads = async () => {
     try {
       setLoading(true);
-      const response = await fetch(getApiUrl('/api/landing-leads'));
+      const response = await fetch(getApiUrl('/api/leads'));
       
       if (!response.ok) {
         throw new Error('Failed to fetch leads');

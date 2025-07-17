@@ -143,7 +143,7 @@ export default function CallsPage() {
     setError(null);
 
     try {
-      const response = await fetch(getApiUrl('/test/retell-call'), {
+      const response = await fetch(getApiUrl('/api/calls/initiate'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -187,7 +187,7 @@ export default function CallsPage() {
     setIsLoading(true);
     
     try {
-      const response = await fetch(getApiUrl('/test/end-call'), {
+      const response = await fetch(getApiUrl(`/api/calls/${callSid}/end`), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

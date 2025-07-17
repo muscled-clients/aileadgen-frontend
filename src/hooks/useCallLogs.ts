@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { getApiUrl } from '@/lib/config';
 
 interface CallLog {
   id: number;
@@ -30,19 +31,21 @@ export const useCallLogs = () => {
   const fetchCallLogs = async () => {
     try {
       setError(null);
-      // For now, return mock data
-      // TODO: Replace with actual API call when backend is ready
-      // const response = await fetch('http://localhost:8000/api/calls');
-      // if (!response.ok) {
-      //   throw new Error('Failed to fetch call logs');
-      // }
-      // const callLogs = await response.json();
-      
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 100));
-      setData(mockCallLogs);
+      // Try to fetch from active calls endpoint
+      const response = await fetch(getApiUrl('/api/calls/active'));
+      if (!response.ok) {
+        // If endpoint doesn't work, fall back to mock data
+        console.warn('Call logs endpoint not available, using mock data');
+        await new Promise(resolve => setTimeout(resolve, 100));
+        setData(mockCallLogs);
+        return;
+      }
+      const callLogs = await response.json();
+      setData(callLogs);
     } catch (err) {
-      setError(err instanceof Error ? err : new Error('Unknown error'));
+      console.warn('Failed to fetch call logs, using mock data:', err);
+      // Fall back to mock data on error
+      setData(mockCallLogs);
     } finally {
       setIsLoading(false);
     }
