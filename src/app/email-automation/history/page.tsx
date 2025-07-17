@@ -68,7 +68,7 @@ export default function EmailHistoryPage() {
       emailType: 'Follow-up Email',
       workflowName: 'Qualified Lead Follow-up',
       workflowId: '2',
-      subject: 'Here\'s how we can help your real estate business',
+      subject: "Here's how we can help your real estate business",
       status: 'opened',
       timestamp: '5 minutes ago',
       openedAt: '3 minutes ago'
@@ -80,7 +80,7 @@ export default function EmailHistoryPage() {
       emailType: 'Completion Reminder',
       workflowName: 'Form Completion Reminder',
       workflowId: '3',
-      subject: 'Don\'t forget to complete your profile',
+      subject: "Don't forget to complete your profile",
       status: 'delivered',
       timestamp: '8 minutes ago'
     },
@@ -116,7 +116,7 @@ export default function EmailHistoryPage() {
       emailType: 'Re-engagement Email',
       workflowName: 'Re-engagement Campaign',
       workflowId: '5',
-      subject: 'We miss you! Here\'s what\'s new',
+      subject: "We miss you! Here's what's new",
       status: 'delivered',
       timestamp: '18 minutes ago'
     },
@@ -127,7 +127,7 @@ export default function EmailHistoryPage() {
       emailType: 'Onboarding Step 1',
       workflowName: 'Onboarding Sequence',
       workflowId: '7',
-      subject: 'Let\'s get you set up for success',
+      subject: "Let's get you set up for success",
       status: 'opened',
       timestamp: '22 minutes ago',
       openedAt: '20 minutes ago'
