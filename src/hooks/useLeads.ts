@@ -1,0 +1,117 @@
+import { useState, useEffect } from 'react';
+
+interface Lead {
+  id: string;
+  name: string;
+  phone_number: string;
+  email?: string;
+  status: 'new' | 'called' | 'booked' | 'callback' | 'not_answered' | 'failed';
+  niche?: string;
+  qualified?: boolean;
+  created_at: string;
+  source?: 'call_system' | 'landing_page' | 'import' | 'manual';
+  monthly_revenue?: string;
+  marketing_budget?: string;
+  pain_point?: string;
+  notes?: string;
+}
+
+interface DashboardStats {
+  total_leads: number;
+  new_leads: number;
+  qualified_leads: number;
+  total_campaigns: number;
+  active_campaigns: number;
+  total_calls: number;
+  successful_calls: number;
+}
+
+export const useLeads = () => {
+  const [data, setData] = useState<Lead[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  const fetchLeads = async () => {
+    try {
+      setError(null);
+      const response = await fetch('http://localhost:8000/api/leads');
+      if (!response.ok) {
+        throw new Error('Failed to fetch leads');
+      }
+      const leads = await response.json();
+      setData(leads);
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error('Unknown error'));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const refetch = () => {
+    setIsLoading(true);
+    fetchLeads();
+  };
+
+  useEffect(() => {
+    fetchLeads();
+    
+    // Poll every 5 seconds for near real-time updates
+    const interval = setInterval(fetchLeads, 5000);
+    
+    // Refetch when window gains focus
+    const handleFocus = () => fetchLeads();
+    window.addEventListener('focus', handleFocus);
+    
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, []);
+
+  return { data, isLoading, error, refetch };
+};
+
+export const useDashboardStats = () => {
+  const [data, setData] = useState<DashboardStats | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  const fetchStats = async () => {
+    try {
+      setError(null);
+      const response = await fetch('http://localhost:8000/dashboard/stats');
+      if (!response.ok) {
+        throw new Error('Failed to fetch dashboard stats');
+      }
+      const stats = await response.json();
+      setData(stats);
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error('Unknown error'));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const refetch = () => {
+    setIsLoading(true);
+    fetchStats();
+  };
+
+  useEffect(() => {
+    fetchStats();
+    
+    // Poll every 10 seconds for dashboard stats
+    const interval = setInterval(fetchStats, 10000);
+    
+    // Refetch when window gains focus
+    const handleFocus = () => fetchStats();
+    window.addEventListener('focus', handleFocus);
+    
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, []);
+
+  return { data, isLoading, error, refetch };
+};
