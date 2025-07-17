@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { getApiUrl } from '@/lib/config';
 
 interface Campaign {
   id: string;
@@ -25,7 +26,7 @@ export const useCampaigns = () => {
   const fetchCampaigns = async () => {
     try {
       setError(null);
-      const response = await fetch('http://localhost:8000/api/campaigns');
+      const response = await fetch(getApiUrl('/api/campaigns'));
       if (!response.ok) {
         throw new Error('Failed to fetch campaigns');
       }
@@ -72,7 +73,7 @@ export const useCampaign = (id: string) => {
     
     try {
       setError(null);
-      const response = await fetch(`http://localhost:8000/api/campaigns/${id}`);
+      const response = await fetch(getApiUrl(`/api/campaigns/${id}`));
       if (!response.ok) {
         throw new Error('Failed to fetch campaign');
       }
@@ -111,7 +112,7 @@ export const useCampaign = (id: string) => {
 
 // Campaign actions
 export const createCampaign = async (campaignData: any) => {
-  const response = await fetch('http://localhost:8000/api/campaigns', {
+  const response = await fetch(getApiUrl('/api/campaigns'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -128,7 +129,7 @@ export const createCampaign = async (campaignData: any) => {
 };
 
 export const updateCampaignStatus = async (id: string, action: 'start' | 'pause' | 'resume') => {
-  const response = await fetch(`http://localhost:8000/api/campaigns/${id}/${action}`, {
+  const response = await fetch(getApiUrl(`/api/campaigns/${id}/${action}`), {
     method: 'POST',
   });
 
@@ -140,7 +141,7 @@ export const updateCampaignStatus = async (id: string, action: 'start' | 'pause'
 };
 
 export const deleteCampaign = async (id: string) => {
-  const response = await fetch(`http://localhost:8000/api/campaigns/${id}`, {
+  const response = await fetch(getApiUrl(`/api/campaigns/${id}`), {
     method: 'DELETE',
   });
 

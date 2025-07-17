@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getApiUrl } from '@/lib/config';
 
 interface FormData {
   isSerious: string;
@@ -84,7 +85,7 @@ export default function ConditionalForm({ onClose, calendlyLink = "https://calen
         completion_status: "incomplete"
       };
       
-      const response = await fetch('http://localhost:8000/api/leads', {
+      const response = await fetch(getApiUrl('/api/leads'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -122,7 +123,7 @@ export default function ConditionalForm({ onClose, calendlyLink = "https://calen
   const updateLead = async (leadId: string, updateData: any): Promise<boolean> => {
     try {
       setApiError(null);
-      const response = await fetch(`http://localhost:8000/api/leads/${leadId}`, {
+      const response = await fetch(getApiUrl(`/api/leads/${leadId}`), {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import DashboardLayout from '@/components/DashboardLayout';
+import { getApiUrl } from '@/lib/config';
 
 interface Lead {
   id: string;
@@ -29,7 +30,7 @@ export default function AdminLeadsPage() {
   const fetchLeads = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8000/api/landing-leads');
+      const response = await fetch(getApiUrl('/api/landing-leads'));
       
       if (!response.ok) {
         throw new Error('Failed to fetch leads');

@@ -92,6 +92,13 @@ export const getApiUrl = (path: string): string => {
   return `${baseUrl}${cleanPath}`;
 };
 
+export const getWebSocketUrl = (path: string): string => {
+  const baseUrl = config.API_BASE_URL.replace(/^https?:\/\//, '').replace(/\/$/, '');
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  const protocol = isProduction ? 'wss' : 'ws';
+  return `${protocol}://${baseUrl}${cleanPath}`;
+};
+
 export const features = {
   enableDevtools: isDevelopment,
   enableAnalytics: isProduction,

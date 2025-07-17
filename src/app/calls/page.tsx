@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useFilteredCallLogs } from '@/hooks/useCallLogs';
 import { useActiveCampaigns, updateCampaignStatus } from '@/hooks/useCampaigns';
 import { useLeads } from '@/hooks/useLeads';
+import { getApiUrl, getWebSocketUrl } from '@/lib/config';
 
 interface CallLog {
   id: number;
@@ -81,7 +82,7 @@ export default function CallsPage() {
   // WebSocket connection for live updates
   useEffect(() => {
     const connectWebSocket = () => {
-      wsRef.current = new WebSocket('ws://localhost:8000/ws/call-monitor');
+      wsRef.current = new WebSocket(getWebSocketUrl('/ws/call-monitor'));
       
       wsRef.current.onopen = () => {
         console.log('WebSocket connected');
@@ -142,7 +143,7 @@ export default function CallsPage() {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:8000/test/retell-call', {
+      const response = await fetch(getApiUrl('/test/retell-call'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -186,7 +187,7 @@ export default function CallsPage() {
     setIsLoading(true);
     
     try {
-      const response = await fetch('http://localhost:8000/test/end-call', {
+      const response = await fetch(getApiUrl('/test/end-call'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -2,6 +2,7 @@
 
 import DashboardLayout from '@/components/DashboardLayout';
 import { useState, useEffect, useRef } from 'react';
+import { getApiUrl, getWebSocketUrl } from '@/lib/config';
 
 interface TranscriptMessage {
   speaker: 'ai' | 'customer';
@@ -29,7 +30,7 @@ export default function CallInterfacePage() {
   // WebSocket connection for live updates
   useEffect(() => {
     const connectWebSocket = () => {
-      wsRef.current = new WebSocket('ws://localhost:8000/ws/call-monitor');
+      wsRef.current = new WebSocket(getWebSocketUrl('/ws/call-monitor'));
       
       wsRef.current.onopen = () => {
         console.log('WebSocket connected');
@@ -95,7 +96,7 @@ export default function CallInterfacePage() {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:8000/test/retell-call', {
+      const response = await fetch(getApiUrl('/test/retell-call'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -128,7 +129,7 @@ export default function CallInterfacePage() {
     setIsLoading(true);
     
     try {
-      const response = await fetch('http://localhost:8000/test/end-call', {
+      const response = await fetch(getApiUrl('/test/end-call'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
