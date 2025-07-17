@@ -46,10 +46,9 @@ export const config: AppConfig = {
   NODE_ENV: validateNodeEnv(process.env.NODE_ENV),
 };
 
-// Debug logging
-console.log('🔍 Debug - Environment variables:');
-console.log('NEXT_PUBLIC_API_URL:', process.env.NEXT_PUBLIC_API_URL);
-console.log('Final API_BASE_URL:', config.API_BASE_URL);
+// Debug: Check if env var is being read
+console.log('API_BASE_URL:', config.API_BASE_URL);
+console.log('ENV VAR:', process.env.NEXT_PUBLIC_API_URL);
 
 // Runtime validation
 export function validateConfig(): void {
