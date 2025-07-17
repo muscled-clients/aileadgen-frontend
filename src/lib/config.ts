@@ -48,9 +48,6 @@ export const config: AppConfig = {
   NODE_ENV: validateNodeEnv(process.env.NODE_ENV),
 };
 
-// Debug: Check if env var is being read
-console.log('API_BASE_URL:', config.API_BASE_URL);
-console.log('ENV VAR:', process.env.NEXT_PUBLIC_API_URL);
 
 // Runtime validation
 export function validateConfig(): void {
@@ -92,9 +89,7 @@ export const isTest = config.NODE_ENV === 'test';
 export const getApiUrl = (path: string): string => {
   const baseUrl = config.API_BASE_URL.replace(/\/$/, '');
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  const finalUrl = `${baseUrl}${cleanPath}`;
-  console.log('🔍 getApiUrl called:', { baseUrl, path, finalUrl });
-  return finalUrl;
+  return `${baseUrl}${cleanPath}`;
 };
 
 export const features = {
