@@ -31,12 +31,20 @@ interface AutomationWorkflow {
 
 interface EmailActivity {
   id: string;
-  recipientName: string;
-  recipientEmail: string;
-  emailType: string;
-  workflowName: string;
-  status: 'sent' | 'delivered' | 'opened' | 'clicked' | 'failed';
-  timestamp: string;
+  to_name: string;
+  to_email: string;
+  subject: string;
+  content: string;
+  template_id?: string;
+  workflow_id?: string;
+  lead_id?: string;
+  resend_id?: string;
+  status: 'sent' | 'delivered' | 'opened' | 'clicked' | 'failed' | 'bounced';
+  sent_at: string;
+  opened_at?: string;
+  clicked_at?: string;
+  failed_at?: string;
+  error_message?: string;
 }
 
 export default function EmailAutomationPage() {

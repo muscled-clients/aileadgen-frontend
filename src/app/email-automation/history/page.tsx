@@ -8,16 +8,20 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
 interface EmailHistoryItem {
   id: string;
-  recipientName: string;
-  recipientEmail: string;
-  emailType: string;
-  workflowName: string;
-  workflowId: string;
+  to_name: string;
+  to_email: string;
   subject: string;
+  content: string;
+  template_id?: string;
+  workflow_id?: string;
+  lead_id?: string;
+  resend_id?: string;
   status: 'sent' | 'delivered' | 'opened' | 'clicked' | 'failed' | 'bounced';
-  timestamp: string;
-  openedAt?: string;
-  clickedAt?: string;
+  sent_at: string;
+  opened_at?: string;
+  clicked_at?: string;
+  failed_at?: string;
+  error_message?: string;
 }
 
 export default function EmailHistoryPage() {
@@ -55,119 +59,133 @@ export default function EmailHistoryPage() {
   const mockEmailHistory = [
     {
       id: '1',
-      recipientName: 'Sarah Johnson',
-      recipientEmail: 'sarah.j@company.com',
-      emailType: 'Welcome Email #1',
-      workflowName: 'New Lead Welcome Series',
-      workflowId: '1',
+      to_name: 'Sarah Johnson',
+      to_email: 'sarah.j@company.com',
       subject: 'Welcome to AI Lead Gen, Sarah!',
+      content: 'Welcome email content...',
+      template_id: 'welcome-email-1',
+      workflow_id: '1',
+      lead_id: 'lead-1',
+      resend_id: 'resend-1',
       status: 'clicked',
-      timestamp: '2 minutes ago',
-      openedAt: '3 minutes ago',
-      clickedAt: '2 minutes ago'
+      sent_at: '2024-01-15T10:00:00Z',
+      opened_at: '2024-01-15T10:03:00Z',
+      clicked_at: '2024-01-15T10:05:00Z'
     },
     {
       id: '2',
-      recipientName: 'Michael Chen',
-      recipientEmail: 'mchen@business.com',
-      emailType: 'Follow-up Email',
-      workflowName: 'Qualified Lead Follow-up',
-      workflowId: '2',
+      to_name: 'Michael Chen',
+      to_email: 'mchen@business.com',
       subject: "Here's how we can help your real estate business",
+      content: 'Follow-up email content...',
+      template_id: 'follow-up-email',
+      workflow_id: '2',
+      lead_id: 'lead-2',
       status: 'opened',
-      timestamp: '5 minutes ago',
-      openedAt: '3 minutes ago'
+      sent_at: '2024-01-15T09:55:00Z',
+      opened_at: '2024-01-15T09:58:00Z'
     },
     {
       id: '3',
-      recipientName: 'Emma Rodriguez',
-      recipientEmail: 'emma.r@startup.io',
-      emailType: 'Completion Reminder',
-      workflowName: 'Form Completion Reminder',
-      workflowId: '3',
+      to_name: 'Emma Rodriguez',
+      to_email: 'emma.r@startup.io',
       subject: "Don't forget to complete your profile",
+      content: 'Reminder email content...',
+      template_id: 'completion-reminder',
+      workflow_id: '3',
+      lead_id: 'lead-3',
       status: 'delivered',
-      timestamp: '8 minutes ago'
+      sent_at: '2024-01-15T09:50:00Z'
     },
     {
       id: '4',
-      recipientName: 'David Wilson',
-      recipientEmail: 'dwilson@corp.com',
-      emailType: 'Welcome Email #2',
-      workflowName: 'New Lead Welcome Series',
-      workflowId: '1',
-      subject: 'See what other real estate owners are saying...',
+      to_name: 'David Wilson',
+      to_email: 'dwilson@corp.com',
+      subject: 'Next steps for your AI Lead Gen journey',
+      content: 'Welcome email #2 content...',
+      template_id: 'welcome-email-2',
+      workflow_id: '1',
+      lead_id: 'lead-4',
       status: 'opened',
-      timestamp: '12 minutes ago',
-      openedAt: '10 minutes ago'
+      sent_at: '2024-01-15T09:45:00Z',
+      opened_at: '2024-01-15T09:47:00Z'
     },
     {
       id: '5',
-      recipientName: 'Lisa Thompson',
-      recipientEmail: 'lisa.t@agency.com',
-      emailType: 'Booking Confirmation',
-      workflowName: 'Booking Confirmation Series',
-      workflowId: '6',
+      to_name: 'Lisa Thompson',
+      to_email: 'lisa.t@agency.com',
       subject: 'Your demo call is confirmed for tomorrow',
+      content: 'Booking confirmation content...',
+      template_id: 'booking-confirmation',
+      workflow_id: '6',
+      lead_id: 'lead-5',
       status: 'clicked',
-      timestamp: '15 minutes ago',
-      openedAt: '14 minutes ago',
-      clickedAt: '13 minutes ago'
+      sent_at: '2024-01-15T09:40:00Z',
+      opened_at: '2024-01-15T09:41:00Z',
+      clicked_at: '2024-01-15T09:42:00Z'
     },
     {
       id: '6',
-      recipientName: 'Robert Martinez',
-      recipientEmail: 'rmartinez@company.net',
-      emailType: 'Re-engagement Email',
-      workflowName: 'Re-engagement Campaign',
-      workflowId: '5',
-      subject: "We miss you! Here's what's new",
+      to_name: 'Robert Martinez',
+      to_email: 'robert.m@business.com',
+      subject: 'Thank you for your interest',
+      content: 'Thank you email content...',
+      template_id: 'thank-you-email',
+      workflow_id: '5',
+      lead_id: 'lead-6',
       status: 'delivered',
-      timestamp: '18 minutes ago'
+      sent_at: '2024-01-15T09:35:00Z'
     },
     {
       id: '7',
-      recipientName: 'Jennifer Adams',
-      recipientEmail: 'j.adams@business.org',
-      emailType: 'Onboarding Step 1',
-      workflowName: 'Onboarding Sequence',
-      workflowId: '7',
+      to_name: 'Jennifer Adams',
+      to_email: 'j.adams@business.org',
       subject: "Let's get you set up for success",
+      content: 'Onboarding step 1 content...',
+      template_id: 'onboarding-step-1',
+      workflow_id: '7',
+      lead_id: 'lead-7',
       status: 'opened',
-      timestamp: '22 minutes ago',
-      openedAt: '20 minutes ago'
+      sent_at: '2024-01-15T09:30:00Z',
+      opened_at: '2024-01-15T09:32:00Z'
     },
     {
       id: '8',
-      recipientName: 'Alex Kim',
-      recipientEmail: 'akim@startup.co',
-      emailType: 'Follow-up Email',
-      workflowName: 'Qualified Lead Follow-up',
-      workflowId: '2',
+      to_name: 'Alex Kim',
+      to_email: 'akim@startup.co',
       subject: 'Ready to schedule your call?',
+      content: 'Follow-up email content...',
+      template_id: 'follow-up-email',
+      workflow_id: '2',
+      lead_id: 'lead-8',
       status: 'sent',
-      timestamp: '25 minutes ago'
+      sent_at: '2024-01-15T09:25:00Z'
     },
     {
       id: '9',
-      recipientName: 'Maria Garcia',
-      recipientEmail: 'maria.g@realty.com',
-      emailType: 'Case Study Email',
-      workflowName: 'New Lead Welcome Series',
-      workflowId: '1',
+      to_name: 'Maria Garcia',
+      to_email: 'maria.g@realty.com',
       subject: 'How Garcia Realty increased leads by 300%',
+      content: 'Case study email content...',
+      template_id: 'case-study-email',
+      workflow_id: '1',
+      lead_id: 'lead-9',
       status: 'failed',
-      timestamp: '30 minutes ago'
+      sent_at: '2024-01-15T09:20:00Z',
+      error_message: 'Failed to deliver'
     },
     {
       id: '10',
-      recipientName: 'James Wilson',
-      recipientEmail: 'jwilson@properties.com',
-      emailType: 'Welcome Email #1',
-      workflowName: 'New Lead Welcome Series',
-      workflowId: '1',
+      to_name: 'James Wilson',
+      to_email: 'jwilson@properties.com',
       subject: 'Welcome to AI Lead Gen, James!',
+      content: 'Welcome email content...',
+      template_id: 'welcome-email-1',
+      workflow_id: '1',
+      lead_id: 'lead-10',
       status: 'bounced',
+      sent_at: '2024-01-15T09:15:00Z',
+      error_message: 'Email bounced'
       timestamp: '35 minutes ago'
     }
   ];
@@ -197,8 +215,8 @@ export default function EmailHistoryPage() {
   const filteredHistory = displayHistory.filter(item => {
     const matchesFilter = filter === 'all' || item.status === filter;
     const matchesSearch = searchTerm === '' || 
-      (item.recipientName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (item.recipientEmail || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (item.to_name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (item.to_email || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
       (item.subject || '').toLowerCase().includes(searchTerm.toLowerCase());
     return matchesFilter && matchesSearch;
   });
@@ -310,28 +328,28 @@ export default function EmailHistoryPage() {
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
                             <span className="text-sm font-semibold text-white">
-                              {(item.recipientName || 'N/A').split(' ').map(n => n[0]).join('').toUpperCase()}
+                              {(item.to_name || 'N/A').split(' ').map(n => n[0]).join('').toUpperCase()}
                             </span>
                           </div>
                           <div>
-                            <p className="font-medium text-gray-900">{item.recipientName || 'Unknown'}</p>
-                            <p className="text-sm text-gray-500">{item.recipientEmail || 'No email'}</p>
+                            <p className="font-medium text-gray-900">{item.to_name || 'Unknown'}</p>
+                            <p className="text-sm text-gray-500">{item.to_email || 'No email'}</p>
                           </div>
                         </div>
                       </td>
                       <td className="py-4 px-6">
                         <div>
-                          <p className="font-medium text-gray-900">{item.emailType || 'Direct Email'}</p>
+                          <p className="font-medium text-gray-900">{item.template_id || 'Direct Email'}</p>
                           <p className="text-sm text-gray-500">{item.subject}</p>
                         </div>
                       </td>
                       <td className="py-4 px-6">
-                        {item.workflowId ? (
+                        {item.workflow_id ? (
                           <Link
-                            href={`/email-automation/workflow/${item.workflowId}`}
+                            href={`/email-automation/workflow/${item.workflow_id}`}
                             className="text-blue-600 hover:text-blue-800 text-sm font-medium"
                           >
-                            {item.workflowName || `Workflow ${item.workflowId}`}
+                            {`Workflow ${item.workflow_id}`}
                           </Link>
                         ) : (
                           <span className="text-sm text-gray-500">No workflow</span>
@@ -344,20 +362,20 @@ export default function EmailHistoryPage() {
                       </td>
                       <td className="py-4 px-6">
                         <div className="text-sm text-gray-600">
-                          {item.openedAt && (
-                            <div>Opened: {item.openedAt}</div>
+                          {item.opened_at && (
+                            <div>Opened: {new Date(item.opened_at).toLocaleDateString()}</div>
                           )}
-                          {item.clickedAt && (
-                            <div>Clicked: {item.clickedAt}</div>
+                          {item.clicked_at && (
+                            <div>Clicked: {new Date(item.clicked_at).toLocaleDateString()}</div>
                           )}
-                          {!item.openedAt && !item.clickedAt && (
+                          {!item.opened_at && !item.clicked_at && (
                             <div>No activity</div>
                           )}
                         </div>
                       </td>
                       <td className="py-4 px-6">
                         <span className="text-sm text-gray-500">
-                          {item.timestamp || (item.sent_at && new Date(item.sent_at).toLocaleDateString()) || 'Unknown'}
+                          {new Date(item.sent_at).toLocaleDateString() || 'Unknown'}
                         </span>
                       </td>
                       <td className="py-4 px-6 text-center">

@@ -12,10 +12,10 @@ interface EmailTemplate {
   name: string;
   subject: string;
   content: string;
-  workflowName: string;
-  workflowId: string;
   variables: string[];
-  previewData: Record<string, string>;
+  workflow_id?: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export default function EmailTemplateEditorPage() {
@@ -26,8 +26,9 @@ export default function EmailTemplateEditorPage() {
     id: templateId,
     name: 'Welcome Email',
     subject: 'Welcome to AI Lead Gen, {{name}}!',
-    workflowName: 'New Lead Welcome Series',
-    workflowId: '1',
+    workflow_id: '1',
+    created_at: '2024-01-15T09:00:00Z',
+    updated_at: '2024-01-15T09:00:00Z',
     variables: ['name', 'email', 'niche', 'phone', 'company_name', 'revenue', 'pain_point', 'calendar_link', 'profile_link'],
     previewData: {
       name: 'John Smith',
@@ -176,8 +177,8 @@ Unsubscribe: [unsubscribe_link]`
                 </svg>
               </li>
               <li>
-                <Link href={`/email-automation/workflow/${template.workflowId}`} className="hover:text-blue-600 transition-colors">
-                  {template.workflowName}
+                <Link href={`/email-automation/workflow/${template.workflow_id}`} className="hover:text-blue-600 transition-colors">
+                  {template.workflow_id ? `Workflow ${template.workflow_id}` : 'No Workflow'}
                 </Link>
               </li>
               <li>
@@ -316,7 +317,7 @@ Unsubscribe: [unsubscribe_link]`
           {/* Action Buttons */}
           <div className="flex items-center justify-between mt-8">
             <Link 
-              href={`/email-automation/workflow/${template.workflowId}`}
+              href={`/email-automation/workflow/${template.workflow_id}`}
               className="text-gray-600 hover:text-gray-800 flex items-center gap-2 font-medium"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
