@@ -1,6 +1,7 @@
 import DashboardLayout from '@/components/DashboardLayout';
 
-export default function CallDetailPage({ params }: { params: { id: string } }) {
+export default async function CallDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const mockTranscript = [
     { speaker: 'AI', text: 'Hello! I\'m calling on behalf of our company. How are you doing today?', time: '10:30:15', confidence: 0.95 },
     { speaker: 'Customer', text: 'Hi, I\'m doing well, thanks. What is this about?', time: '10:30:22', confidence: 0.92 },
@@ -16,7 +17,7 @@ export default function CallDetailPage({ params }: { params: { id: string } }) {
     <DashboardLayout>
       <div className="p-6">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">Call Detail #{params.id}</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Call Detail #{id}</h1>
           <p className="text-gray-600">Detailed view of call transcript and recording</p>
         </div>
 

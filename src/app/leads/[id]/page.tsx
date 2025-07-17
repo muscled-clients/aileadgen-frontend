@@ -1,6 +1,7 @@
 import DashboardLayout from '@/components/DashboardLayout';
 
-export default function LeadDetailPage({ params }: { params: { id: string } }) {
+export default async function LeadDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const mockCallHistory = [
     { id: 1, date: '2024-01-15 10:30', duration: '3:45', outcome: 'Booked', notes: 'Scheduled follow-up call' },
     { id: 2, date: '2024-01-10 14:20', duration: '2:15', outcome: 'Callback', notes: 'Requested call back next week' },
@@ -11,7 +12,7 @@ export default function LeadDetailPage({ params }: { params: { id: string } }) {
     <DashboardLayout>
       <div className="p-6">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">Lead Detail #{params.id}</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Lead Detail #{id}</h1>
           <p className="text-gray-600">Detailed information and call history</p>
         </div>
 
