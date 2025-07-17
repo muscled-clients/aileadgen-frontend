@@ -41,15 +41,16 @@ export default function EmailHistoryPage() {
     );
   }
 
-  if (error) {
-    return (
-      <DashboardLayout>
-        <div className="flex items-center justify-center h-64">
-          <div className="text-red-600">Error loading email history: {error?.message || error?.toString() || 'An unexpected error occurred'}</div>
-        </div>
-      </DashboardLayout>
-    );
-  }
+  // Error handling disabled since API call is disabled
+  // if (error) {
+  //   return (
+  //     <DashboardLayout>
+  //       <div className="flex items-center justify-center h-64">
+  //         <div className="text-red-600">Error loading email history: {error?.message || error?.toString() || 'An unexpected error occurred'}</div>
+  //       </div>
+  //     </DashboardLayout>
+  //   );
+  // }
 
   const mockEmailHistory = [
     {
