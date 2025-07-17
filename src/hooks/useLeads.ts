@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { getApiUrl } from '@/lib/config';
 
 interface Lead {
   id: string;
@@ -34,7 +35,7 @@ export const useLeads = () => {
   const fetchLeads = async () => {
     try {
       setError(null);
-      const response = await fetch('http://localhost:8000/api/leads');
+      const response = await fetch(getApiUrl('/api/leads'));
       if (!response.ok) {
         throw new Error('Failed to fetch leads');
       }
@@ -79,7 +80,7 @@ export const useDashboardStats = () => {
   const fetchStats = async () => {
     try {
       setError(null);
-      const response = await fetch('http://localhost:8000/dashboard/stats');
+      const response = await fetch(getApiUrl('/dashboard/stats'));
       if (!response.ok) {
         throw new Error('Failed to fetch dashboard stats');
       }
