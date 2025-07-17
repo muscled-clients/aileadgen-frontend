@@ -4,6 +4,23 @@ import DashboardLayout from '@/components/DashboardLayout';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { useCampaigns, updateCampaignStatus } from '@/hooks/useCampaigns';
 
+interface Campaign {
+  id: string;
+  name: string;
+  description?: string;
+  status: 'created' | 'running' | 'paused' | 'completed' | 'cancelled';
+  niche?: string;
+  lead_ids: string[];
+  total_leads: number;
+  called_leads: number;
+  successful_calls: number;
+  failed_calls: number;
+  created_at: string;
+  updated_at: string;
+  started_at?: string;
+  completed_at?: string;
+}
+
 export default function CampaignsPage() {
   const { data: campaigns, isLoading: loading, error, refetch } = useCampaigns();
 
