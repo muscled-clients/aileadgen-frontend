@@ -29,7 +29,7 @@ export default function EmailHistoryPage() {
   // const { history: emailHistory, isLoading, error } = useEmailHistory(100, 0);
   const emailHistory: EmailHistoryItem[] = [];
   const isLoading = false;
-  const error = null;
+  const error: Error | null = null;
   
   if (isLoading) {
     return (
