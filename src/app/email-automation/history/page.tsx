@@ -165,7 +165,7 @@ export default function EmailHistoryPage() {
       status: 'bounced',
       timestamp: '35 minutes ago'
     }
-  ]);
+  ];
 
   const [filter, setFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
