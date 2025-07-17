@@ -18,13 +18,20 @@ interface Lead {
 }
 
 interface DashboardStats {
-  total_leads: number;
-  new_leads: number;
-  qualified_leads: number;
-  total_campaigns: number;
-  active_campaigns: number;
-  total_calls: number;
-  successful_calls: number;
+  totalLeads: number;
+  newLeads: number;
+  qualifiedLeads: number;
+  totalCalls: number;
+  todaysCalls: number;
+  successfulCalls: number;
+  failedCalls: number;
+  calledLeads: number;
+  bookedLeads: number;
+  callbackLeads: number;
+  notAnsweredLeads: number;
+  failedLeads: number;
+  unqualifiedLeads: number;
+  averageDuration: number;
 }
 
 export const useLeads = () => {
