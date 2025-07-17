@@ -33,10 +33,10 @@ export default function DashboardPage() {
   const { data: stats, isLoading: loading, error } = useDashboardStats();
 
   const dashboardCards = [
-    { title: 'Total Leads', value: stats?.totalLeads?.toString() || '0', change: '', trend: 'neutral' as const },
-    { title: 'New Leads', value: stats?.newLeads?.toString() || '0', change: '', trend: 'neutral' as const },
-    { title: 'Total Calls', value: stats?.totalCalls?.toString() || '0', change: '', trend: 'neutral' as const },
-    { title: "Today's Calls", value: stats?.todaysCalls?.toString() || '0', change: '', trend: 'neutral' as const },
+    { title: 'Total Leads', value: stats?.total_leads?.toString() || '0', change: '', trend: 'neutral' as const },
+    { title: 'New Leads', value: stats?.new_leads?.toString() || '0', change: '', trend: 'neutral' as const },
+    { title: 'Total Calls', value: stats?.total_calls?.toString() || '0', change: '', trend: 'neutral' as const },
+    { title: "Today's Calls", value: stats?.successful_calls?.toString() || '0', change: '', trend: 'neutral' as const },
   ];
 
   const recentActivity = [
