@@ -92,7 +92,9 @@ export const isTest = config.NODE_ENV === 'test';
 export const getApiUrl = (path: string): string => {
   const baseUrl = config.API_BASE_URL.replace(/\/$/, '');
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  return `${baseUrl}${cleanPath}`;
+  const finalUrl = `${baseUrl}${cleanPath}`;
+  console.log('🔍 getApiUrl called:', { baseUrl, path, finalUrl });
+  return finalUrl;
 };
 
 export const features = {

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { getApiUrl } from '@/lib/config';
 
+console.log('🔍 useLeads hook loaded, getApiUrl:', getApiUrl);
+
 interface Lead {
   id: string;
   name: string;
